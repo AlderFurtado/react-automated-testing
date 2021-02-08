@@ -7,6 +7,7 @@ function FormLogin() {
   const [password, setPassword] = useState("");
   const [isFormValidate, setIsFormValidate] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const [isCredentialValid, setIsCredentialValid] = useState(false);
 
   useEffect(() => {
     validateForm();
@@ -18,9 +19,17 @@ function FormLogin() {
     setIsFormValidate(true);
   };
 
+  const logIn = (e) => {
+    e.preventDefault();
+    if (email.trim() !== "teste@teste.com") return setIsCredentialValid(false);
+    if (password.trim() !== "123456") return setIsCredentialValid(false);
+    setIsCredentialValid(true);
+    setIsLogged(true);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={logIn}>
         <input
           data-testid="email"
           type="email"
@@ -41,7 +50,7 @@ function FormLogin() {
           Log In
         </button>
       </form>
-      {isLogged && <p>Login com sucesso</p>}
+      {isLogged && <p data-testid="alert-logged-user">Login com sucesso</p>}
     </div>
   );
 }
